@@ -62,7 +62,7 @@ public class StudentController {
     public List<Student> searchByName(String name) {
         List<Student> result = new ArrayList<>();
         for (Student s : students) {
-            if (s.getName().equalsIgnoreCase(name)) {
+            if (s.getName().toLowerCase().contains(name.toLowerCase())) { //partial search
                 result.add(s);
             }
         }
