@@ -9,9 +9,10 @@ public class Validator {
     public  static final double DEFAULT_FEE = 6000000;       
     //Pattern data when user input
     private static final String ID_PATTERN = "^[S|H|D|Q|C]E\\d{6}$";
-    private static final String NAME_PATTERN = "^[a-zA-Z\\\\s]{2,20}$";
+    private static final String NAME_PATTERN = "^[a-zA-Z\\s]{2,20}$";
     private static final String PHONE_PATTERN = "^0\\d{9}$";
-    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";    
+ 
     //pattern phone to check viettel or vnpt
     private static final Set<String> VIETTEL_PREFIXES = new HashSet<>(Arrays.asList("086","096","097","098","032","033","034","035","036","037","038","039"));
     private static final Set<String> VNPT_PREFIXES = new HashSet<>(Arrays.asList("088","091","094","083","084","085"));
@@ -33,5 +34,16 @@ public class Validator {
         if (!validPhone(phone)) return false;
         String prefix = phone.substring(0,3);
         return VIETTEL_PREFIXES.contains(prefix) || VNPT_PREFIXES.contains(prefix);
+    }
+    
+    public static String titleCase(String name) {
+        String[] words = name.trim().split("\\s+");
+        StringBuilder result = new StringBuilder();
+        for(String w : words) {
+            result.append(Character.toUpperCase(w.charAt(0)))
+                  .append(w.substring(1).toLowerCase())
+                  .append(" ");
+        }
+        return result.toString().trim();
     }
 }

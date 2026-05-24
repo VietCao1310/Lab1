@@ -75,15 +75,16 @@ public class Main {
         while (!Validator.validName(name)) {
             name = view.readString("Invalid! Name must have 2-20 chars(a-z): ");
         }
+        name = Validator.titleCase(name);
 
         String phone = view.readString("Enter Phone: ");
         while (!Validator.validPhone(phone)) {
-            phone = view.readString("Invalid! Phone must have 10 digits: ");
+            phone = view.readString("Invalid! Phone must have 10 digits (0xxxx): ");
         }
 
         String email = view.readString("Enter Email: ");
         while (!Validator.validEmail(email)) {
-            email = view.readString("Invalid email format! Ex: (example@.com)");
+            email = view.readString("Invalid email format! Ex: (example@.com): ");
         }
 
         view.showMountains(mtCon.getAll());
@@ -121,6 +122,7 @@ public class Main {
                 }
             }
             if (!name.isEmpty()) {
+                name = Validator.titleCase(name);
                 s.setName(name);
             }
         }
