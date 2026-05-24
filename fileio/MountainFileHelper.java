@@ -20,13 +20,13 @@ public class MountainFileHelper implements IFileReadWrite<Mountain> {
     public List<Mountain> read() throws Exception {
         List<Mountain> list = new ArrayList<>();
         File f;
-        FileInputStream file = null;
+        FileInputStream file = null;  
         BufferedReader myInput = null;// create Buffer    
         try {
             f = new File(FILE_NAME);//open file
             String fullPath = f.getAbsolutePath(); //get Fullpath of file   
-            file = new FileInputStream(fullPath);
-            myInput = new BufferedReader(new InputStreamReader(file));
+            file = new FileInputStream(fullPath); //ready data by byte
+            myInput = new BufferedReader(new InputStreamReader(file)); //convert byte --> text
             // read line until the end of the file
             String line = null;
             boolean first = true;

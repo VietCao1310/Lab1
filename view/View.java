@@ -39,7 +39,7 @@ public class View {
         }
     }
     
-    //read input from user
+    //read integer from user
     public int readInt(String prompt) {
         while (true) {
             try {
@@ -63,7 +63,8 @@ public class View {
         System.out.print(prompt);
         return sc.nextLine().trim();
     }
-
+    
+    //show success or failure
     public void showMessage(String msg) {
         System.out.println(msg);
     }

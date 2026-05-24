@@ -79,7 +79,7 @@ public class Main {
 
         String phone = view.readString("Enter Phone: ");
         while (!Validator.validPhone(phone)) {
-            phone = view.readString("Invalid! Phone must have 10 digits (0xxxx): ");
+            phone = view.readString("Invalid! Phone must have 10 digits and belong to VietNam : ");
         }
 
         String email = view.readString("Enter Email: ");
@@ -133,7 +133,7 @@ public class Main {
         String phone = view.readStringAllowEmpty("New Phone (Current: " + s.getPhone() + "): ");
         if (!phone.isEmpty()) {
             while (!Validator.validPhone(phone)) {
-                phone = view.readString("Invalid! 10 digits (or Enter to skip): ");
+                phone = view.readString("Invalid! 10 digits and belong to VietNam (or Enter to skip): ");
                 if (phone.isEmpty()) {
                     break;
                 }
@@ -189,6 +189,7 @@ public class Main {
             System.out.println("ID: " + s.getId());
             System.out.println("Name: " + s.getName());
             System.out.println("Phone: " + s.getPhone());
+            System.out.println("Email: " + s.getEmail());
             System.out.println("Mountain: " + s.getMountainCode());
             System.out.println("Fee: " + String.format("%,.0f", s.getFee()));
 

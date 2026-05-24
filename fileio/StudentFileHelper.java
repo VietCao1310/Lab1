@@ -1,14 +1,15 @@
 package fileio;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import entities.Student;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class StudentFileHelper implements IFileReadWrite<Student> {
 
@@ -16,42 +17,44 @@ public class StudentFileHelper implements IFileReadWrite<Student> {
 
     @Override
     public List<Student> read() throws Exception {
-        List<Student> list = new ArrayList<>();
         File f = new File(FILE_NAME);
-        if (!f.exists()) return list;
+           if (!f.exists()) {
+               return new ArrayList<>();
+           }
+           ObjectInputStream ois = null;
+           try {
+               ois = new ObjectInputStream(
+                       new FileInputStream(f));
 
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(f));
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (line.trim().isEmpty()) continue;
-                Student s = convertToStudent(line);
-                if (s != null) list.add(s);
-            }
-        } finally {
-            if (br != null) br.close();
-        }
-        return list;
+               return (List<Student>) ois.readObject();
+
+           } finally {
+               if (ois != null) {
+                   ois.close();
+               }
+           }
     }
 
     @Override
     public boolean write(List<Student> list) throws Exception {
-        BufferedWriter bw = null;
-        try {
-            bw = new BufferedWriter(new FileWriter(FILE_NAME));
-            for (Student s : list) {
-                bw.write(convertToString(s));
-                bw.newLine();
-            }
-            return true;
-        } catch (IOException e) {
-            return false;
-        } finally {
-            if (bw != null) bw.close();
-        }
-    }
+            ObjectOutputStream oos = null;
+            try {
+                oos = new ObjectOutputStream(
+                        new FileOutputStream(FILE_NAME));
 
+                oos.writeObject(list);
+
+                return true;
+
+            } catch (IOException e) {
+                return false;
+
+            } finally {
+                if (oos != null) {
+                    oos.close();
+                }
+            }
+    }
     
     private String convertToString(Student student) {
         return String.format("%s,%s,%s,%s,%s,%.0f",
