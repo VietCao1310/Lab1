@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Student;
+import entities.Student;
 
 public class StudentFileHelper implements IFileReadWrite<Student> {
 

@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class View {
 
     private final Scanner sc;
-
+    //object input
     public View(Scanner sc) {
         this.sc = sc;
     }
@@ -38,7 +38,8 @@ public class View {
             System.out.println(m);
         }
     }
-
+    
+    //read input from user
     public int readInt(String prompt, int min, int max) {
         while (true) {
             try {
@@ -49,7 +50,7 @@ public class View {
                 }
                 return val;
             } catch (Exception e) {
-                System.out.println("Invalid number, try again.");
+                System.out.println("Invalid number, try again!");
             }
         }
     }
@@ -61,7 +62,7 @@ public class View {
                 int val = Integer.parseInt(sc.nextLine().trim());
                 return val;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid number, try again.");
+                System.out.println("Invalid number, try again!");
             }
         }
     }
@@ -79,7 +80,7 @@ public class View {
                 }
                 return val;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid number, try again.");
+                System.out.println("Invalid number, try again!");
             }
         }
     }
@@ -91,7 +92,7 @@ public class View {
                 double val = Double.parseDouble(sc.nextLine().trim());
                 return val;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid number, try again.");
+                System.out.println("Invalid number, try again!");
             }
         }
     }
@@ -109,7 +110,7 @@ public class View {
                 }
                 return val;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid number, try again.");
+                System.out.println("Invalid number, try again!");
             }
         }
     }

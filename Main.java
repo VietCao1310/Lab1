@@ -3,17 +3,17 @@ import controller.MountainController;
 import controller.StudentController;
 import java.util.List;
 import java.util.Scanner;
-import model.Mountain;
-import model.Student;
+import entities.Mountain;
+import entities.Student;
 import util.Validator;
 import view.View;
 
 public class Main {
-
-    private final StudentController stCon = new StudentController();
-    private final MountainController mtCon = new MountainController();
-    private final View view = new View(new Scanner(System.in));
-    private boolean isChanged = false;
+    
+    private final StudentController stCon = new StudentController();        //manager student
+    private final MountainController mtCon = new MountainController();      //manager mountain 
+    private final View view = new View(new Scanner(System.in));             //choose function
+    private boolean isChanged = false;                          //has anything changed ?
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -73,26 +73,27 @@ public class Main {
 
         String name = view.readString("Enter Name: ");
         while (!Validator.validName(name)) {
-            name = view.readString("Invalid! Name must be 2-20 chars: ");
+            name = view.readString("Invalid! Name must have 2-20 chars(a-z): ");
         }
 
         String phone = view.readString("Enter Phone: ");
         while (!Validator.validPhone(phone)) {
-            phone = view.readString("Invalid! Phone must be 10 digits: ");
+            phone = view.readString("Invalid! Phone must have 10 digits: ");
         }
 
         String email = view.readString("Enter Email: ");
         while (!Validator.validEmail(email)) {
-            email = view.readString("Invalid email format!");
+            email = view.readString("Invalid email format! Ex: (example@.com)");
         }
 
         view.showMountains(mtCon.getAll());
         String mCode = view.readString("Enter Mountain Code: ");
         while (mtCon.findByCode(mCode) == null) {
-            mCode = view.readString("Not found! Re-enter Mountain Code: ");
+            mCode = view.readString("Not found! Try again mountain Code: ");
         }
-
-        double fee = (double) view.readInt("Enter Fee (Default 6,000,000): ");
+        //defaut fee = 6.000.000
+        double fee = Validator.DEFAULT_FEE;
+        //check for discount
         if (Validator.isViettelOrVNPT(phone)) {
             fee = fee * 0.65;
             view.showMessage("Discount 35% applied!");
@@ -160,7 +161,7 @@ public class Main {
         String mCode = view.readStringAllowEmpty("New Mountain Code (Current: " + s.getMountainCode() + "): ");
         if (!mCode.isEmpty()) {
             while (mtCon.findByCode(mCode) == null) {
-                mCode = view.readString("Not found! Re-enter (or Enter to skip): ");
+                mCode = view.readString("Not found! Try again (or Enter to skip): ");
                 if (mCode.isEmpty()) {
                     break;
                 }
@@ -248,7 +249,7 @@ public class Main {
 
     private void exit() {
         if (isChanged) {
-            String confirm = view.readString("You have unsaved changes. Save before exiting? (Y/N): ");
+            String confirm = view.readString("WARNING!!\nYou have unsaved changes. Save before exiting? (Y/N): ");
             if (confirm.equalsIgnoreCase("Y")) {
                 save();
             }

@@ -1,6 +1,6 @@
 package controller;
 
-import model.Student;
+import entities.Student;
 import fileio.IFileReadWrite;
 import fileio.StudentFileHelper;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class StudentController {
     private List<Student> students;
 
     public StudentController() {
-
+        //read file --> list student
         try {
             IFileReadWrite<Student> fileHelper = new StudentFileHelper();
             students = fileHelper.read();
@@ -62,7 +62,7 @@ public class StudentController {
     public List<Student> searchByName(String name) {
         List<Student> result = new ArrayList<>();
         for (Student s : students) {
-            if (s.getName().toLowerCase().contains(name.toLowerCase())) {
+            if (s.getName().equalsIgnoreCase(name)) {
                 result.add(s);
             }
         }
@@ -78,7 +78,7 @@ public class StudentController {
         }
         return result;
     }
-
+    
     public boolean saveToFile() {
         try {
             IFileReadWrite<Student> fileHelper = new StudentFileHelper();

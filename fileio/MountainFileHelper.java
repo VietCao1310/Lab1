@@ -7,17 +7,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import model.Mountain;
+import entities.Mountain;
 
-/**
- *
- * @author NguyenPhuc
- */
+
+
 public class MountainFileHelper implements IFileReadWrite<Mountain> {
 
     private final String FILE_NAME = "src/fileio/MountainList.csv";
 
     @Override
+    //moutain just need read
     public List<Mountain> read() throws Exception {
         List<Mountain> list = new ArrayList<>();
         File f;
@@ -25,7 +24,7 @@ public class MountainFileHelper implements IFileReadWrite<Mountain> {
         BufferedReader myInput = null;// create Buffer    
         try {
             f = new File(FILE_NAME);//open file
-            String fullPath = f.getAbsolutePath(); //get Fullpath of file
+            String fullPath = f.getAbsolutePath(); //get Fullpath of file   
             file = new FileInputStream(fullPath);
             myInput = new BufferedReader(new InputStreamReader(file));
             // read line until the end of the file
@@ -57,31 +56,8 @@ public class MountainFileHelper implements IFileReadWrite<Mountain> {
     }
 
     @Override
+    //moutain dont need to CRUD
     public boolean write(List<Mountain> list) throws Exception {
-        File f;
-//        FileOutputStream file = null;
-//        BufferedWriter myOutput = null;// create Buffer    
-//        try {
-//            f = new File(FILE_NAME);//open file
-//            String fullPath = f.getAbsolutePath(); //get Fullpath of file
-//            file = new FileOutputStream(fullPath);
-//            myOutput = new BufferedWriter(new OutputStreamWriter(file));
-//            // write line until the end of the file
-//            for (Mountain moun : list) {
-//                String str = convertToString(moun);
-//                myOutput.write(str);
-//                myOutput.newLine();
-//            }
-//        } catch (Exception ex) {
-//            throw ex;
-//        } finally {
-//            if (myOutput != null) {
-//                myOutput.close();
-//            }
-//            if (file != null) {
-//                file.close();
-//            }
-//        }
         return true;
     }
 

@@ -1,6 +1,6 @@
 package controller;
 
-import model.Mountain;
+import entities.Mountain;
 import fileio.IFileReadWrite;
 import fileio.MountainFileHelper;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 public class MountainController {
 
     private List<Mountain> mountains = new ArrayList<>();
-
+    //read file --> list
     public MountainController() {
         try {
             IFileReadWrite file = new MountainFileHelper();
@@ -18,7 +18,7 @@ public class MountainController {
             mountains = new ArrayList<>();
         }
     }
-
+    
     public List<Mountain> getAll() {
         return mountains;
     }
