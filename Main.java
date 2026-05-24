@@ -12,7 +12,7 @@ public class Main {
     
     private final StudentController stCon = new StudentController();        //manager student
     private final MountainController mtCon = new MountainController();      //manager mountain 
-    private final View view = new View(new Scanner(System.in));             //choose function
+    private final View view = new View(new Scanner(System.in));             //scanner
     private boolean isChanged = false;                          //has anything changed ?
 
     public static void main(String[] args) {
@@ -88,10 +88,13 @@ public class Main {
         }
 
         view.showMountains(mtCon.getAll());
-        String mCode = view.readString("Enter Mountain Code: ");
+        String mCode = view.readString("Enter Mountain Code: ").toUpperCase();
         while (mtCon.findByCode(mCode) == null) {
             mCode = view.readString("Not found! Try again mountain Code: ");
+            
         }
+        
+             
         //defaut fee = 6.000.000
         double fee = Validator.DEFAULT_FEE;
         //check for discount
@@ -137,7 +140,7 @@ public class Main {
             }
             if (!phone.isEmpty()) {
                 s.setPhone(phone);
-                double baseFee = (double) view.readInt("Update Base Fee (Current: " + s.getFee() + "): ");
+                double baseFee = Validator.DEFAULT_FEE;
                 if (Validator.isViettelOrVNPT(phone)) {
                     baseFee = baseFee * 0.65;
                     view.showMessage("Discount 35% applied based on new phone!");
@@ -160,7 +163,8 @@ public class Main {
         }
 
         view.showMountains(mtCon.getAll());
-        String mCode = view.readStringAllowEmpty("New Mountain Code (Current: " + s.getMountainCode() + "): ");
+        String mCode = view.readStringAllowEmpty("New Mountain Code (Current: " + s.getMountainCode() + "): ").toUpperCase();
+        
         if (!mCode.isEmpty()) {
             while (mtCon.findByCode(mCode) == null) {
                 mCode = view.readString("Not found! Try again (or Enter to skip): ");
@@ -232,12 +236,12 @@ public class Main {
 
     private void statistics() {
         System.out.println("---------------------------------------------------------");
-        System.out.printf("%-25s | %-10s | %-15s\n", "Mountain", "Count", "Total Fee");
+        System.out.printf("%-8s | %-25s | %-10s | %-15s\n", "Code", "Mountain", "Count", "Total Fee");
         System.out.println("---------------------------------------------------------");
         for (Mountain m : mtCon.getAll()) {
             int count = stCon.countStudentsByMountain(m.getCode());
             if (count > 0) {
-                System.out.printf("%-25s | %10d | %,15.0f\n", m.getName(), count, stCon.getTotalFeeByMountain(m.getCode()));
+                System.out.printf("%-8s | %-25s | %10d | %,15.0f\n",m.getCode(), m.getName(), count, stCon.getTotalFeeByMountain(m.getCode()));
             }
         }
     }
@@ -260,6 +264,7 @@ public class Main {
         System.exit(0);
     }
 
+    //display list
     private void displayStudentTable(List<Student> list) {
         System.out.println("--------------------------------------------------------------------------------");
         System.out.printf("%-10s | %-18s | %-12s | %-8s | %-12s\n", "ID", "Name", "Phone", "M.Code", "Fee");
